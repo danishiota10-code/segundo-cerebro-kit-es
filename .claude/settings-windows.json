@@ -1,0 +1,34 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"import os,runpy; p=os.path.join(os.environ.get('CLAUDE_PROJECT_DIR') or '.', '.claude', 'hooks', 'session-start.py'); os.path.isfile(p) and runpy.run_path(p, run_name='__main__')\""
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"import os,runpy; p=os.path.join(os.environ.get('CLAUDE_PROJECT_DIR') or '.', '.claude', 'hooks', 'session-end.py'); os.path.isfile(p) and runpy.run_path(p, run_name='__main__')\""
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"import os,runpy; p=os.path.join(os.environ.get('CLAUDE_PROJECT_DIR') or '.', '.claude', 'hooks', 'session-capture.py'); os.path.isfile(p) and runpy.run_path(p, run_name='__main__')\""
+          }
+        ]
+      }
+    ]
+  }
+}

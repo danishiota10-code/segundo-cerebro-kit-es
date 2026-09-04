@@ -1,0 +1,15 @@
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+.env
+.env.*
+*.log
+/tmp/
+node_modules/
+
+# Obsidian per-user layout (not shared). The rest of .obsidian/ stays tracked
+# so a fresh clone opens styled (app.json, core-plugins.json, graph.json, appearance.json).
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
