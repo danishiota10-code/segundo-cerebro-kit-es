@@ -148,6 +148,13 @@ Los comandos `/...` son más robustos; los prompts para copiar y pegar son más 
 
 ---
 
-## ¿Quieres el sistema avanzado?
+## Subagentes
 
-Este kit es la base. Para la versión avanzada, con multi-agent swarms, scripts de automatización, hooks a la medida, agentes 24/7 y el skill pack completo, entra a: https://matheusvizotto.com/pt-br/produtos/obsidian
+El kit trae cuatro subagentes, en `.claude/agents/`. Son de proyecto, así que valen solo en este vault y no ensucian la carpeta personal de la máquina:
+
+- `vault-keeper` — lee el vault y responde con contexto histórico, citando el archivo
+- `social-agent` — redacta la respuesta a un mensaje con el contexto de los proyectos
+- `decision-tracker` — captura una decisión en `03 Intelligence/decisions/` con su porqué
+- `research-agent` — investigación de anuncios, copy y medios, solo de fuentes públicas
+
+Para activar uno, pídelo por su nombre. Para ajustarlo, edita el archivo — es markdown.

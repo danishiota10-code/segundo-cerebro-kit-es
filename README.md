@@ -1,6 +1,6 @@
-# Next Level AI — Starter Kit (edición en español)
+# Segundo Cerebro — Starter Kit
 
-**por Matheus Vizotto** · [Instagram](https://instagram.com/matheusvizotto) · [matheusvizotto.com](https://matheusvizotto.com)
+**por Daniel Shiota** · [WhatsApp](https://wa.me/61414059664)
 
 ---
 
@@ -74,15 +74,13 @@ Claude monta el vault en la carpeta actual, instala el equipo de subagentes y lo
 > 3. **Detecte el sistema operativo y actúe según eso, SIN preguntarle al usuario.** Usted ya sabe cuál es: su contexto de entorno dice en qué plataforma está corriendo (`win32` = Windows nativo, `darwin` = macOS, `linux` = Linux o WSL, y WSL cuenta como Linux). No asuma macOS por defecto.
 >    - **macOS, Linux o WSL:** no cambie nada, el `settings.json` del clon ya está bien.
 >    - **Windows nativo (PowerShell):** copie `.claude/settings-windows.json` encima de `.claude/settings.json`. Obligatorio, no es preferencia: el archivo por defecto usa `$CLAUDE_PROJECT_DIR`, que es expansión POSIX y queda como cadena vacía en PowerShell, así que cada prompt vuelve con un error de Python pegado. Después corra `python --version`; si solo responde `python3`, cambie la primera palabra de los tres comandos por `python3`. Declare en su plan qué sistema detectó y qué archivo quedó rigiendo.
-> 4. **Instale los subagentes.** En macOS, Linux o WSL:
->    `curl -fsSL https://raw.githubusercontent.com/matheusvizotto/next-level-subagents/main/install.sh | bash`
->    En Windows nativo ese comando no funciona (`curl | bash` es POSIX, y en PowerShell 5 `curl` ni siquiera es el curl de verdad). Haga el equivalente usted mismo: clone `https://github.com/matheusvizotto/next-level-subagents.git` en una carpeta temporal y copie los `agents/*.md` a `%USERPROFILE%\.claude\agents\` (cree la carpeta si no existe). Es todo lo que hace el install.sh.
-> 5. **Confirme** que `~/.claude/agents/` contenga: `vault-keeper`, `social-agent`, `decision-tracker`, `research-agent`
+> 4. **Los subagentes ya vinieron en el clon.** Están en `.claude/agents/`, dentro del vault. Nada que instalar, nada que bajar de afuera, y nada se escribe en la carpeta personal del usuario — Claude Code carga solo los agentes de proyecto.
+> 5. **Confirme** que `.claude/agents/` contenga los cuatro: `vault-keeper`, `social-agent`, `decision-tracker`, `research-agent`
 > 6. **Corra el onboarding LEYENDO el archivo, no vía slash command.** Lea `.claude/commands/setup.md` (en la carpeta del vault) y ejecute ese flujo de entrevista directamente en la conversación: haga las preguntas y llene `02 Context/me.md` con las respuestas reales. Usted está ejecutando el contenido del archivo, no invocando `/setup`.
 > 7. **Demuestre que funcionó:** lea el `me.md` recién llenado y devuélvale al usuario un resumen de quién es, como lo haría el `vault-keeper`.
 > 8. **Oriente el siguiente paso:** dígale al usuario que de ahí en adelante abra Claude Code Y Obsidian **en esta misma carpeta** — es donde quedan activos los hooks de documentación automática y los comandos del vault.
 >
-> Avise al comienzo que va a pedir permiso para correr `git` y `curl`, y que solo hay que aceptar.
+> Avise al comienzo que va a pedir permiso para correr `git`, y que solo hay que aceptar.
 
 ---
 
@@ -108,6 +106,7 @@ Claude monta el vault en la carpeta actual, instala el equipo de subagentes y lo
 ```
 segundo-cerebro-kit-es/
 ├── .claude/
+│   ├── agents/                   → Los 4 subagentes, ya incluidos
 │   └── commands/
 │       ├── setup.md              → Personalización inicial completa
 │       ├── asistente.md          → Operación diaria (sesiones, revisiones, tareas)
@@ -260,40 +259,26 @@ A medida que usted pega notas y trabaja, el grafo se va a llenar de notas suelta
 
 ---
 
-## Agregue el equipo de subagentes
+## El equipo de subagentes
 
-Este vault es el cerebro. Los **subagentes** son el equipo que trabaja encima de él.
-
-Instale los 4 subagentes gratuitos que corren directo sobre esta estructura de carpetas:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/matheusvizotto/next-level-subagents/main/install.sh | bash
-```
+Este vault es el cerebro. Los **subagentes** son el equipo que trabaja encima de él. Ya vienen en el clon, en `.claude/agents/` — no hay nada que instalar.
 
 | Subagente | Qué hace |
 |---|---|
-| `vault-keeper` | Lee este vault y responde con contexto histórico |
-| `social-agent` | Redacta respuestas para Telegram/Discord con contexto |
-| `decision-tracker` | Captura decisiones en `03 Intelligence/decisions/` automáticamente |
-| `research-agent` | Auditoría de pauta, copy y plan de medios (fuentes públicas) |
+| `vault-keeper` | Lee este vault y responde con contexto histórico, citando el archivo |
+| `social-agent` | Redacta respuestas para Telegram, Discord o iMessage con el contexto de sus proyectos |
+| `decision-tracker` | Captura decisiones en `03 Intelligence/decisions/`, con el porqué incluido |
+| `research-agent` | Auditoría de anuncios, variaciones de copy y plan de medios, solo de fuentes públicas |
 
-Repositorio completo: [github.com/matheusvizotto/next-level-subagents](https://github.com/matheusvizotto/next-level-subagents)
+Como quedan dentro del vault y no en su carpeta personal, cada vault puede tener su propio equipo, ajustado a su trabajo. Para editar uno, abra el archivo — es markdown, igual que el resto.
 
 ---
 
-## Inmersión Segundo Cerebro
+## Si prefiere montarlo acompañado
 
-Este kit + los 4 subagentes son la base, libres. En la inmersión se muestra lo que no está acá:
+Este kit es el sistema entero, gratis. Si prefiere montarlo con alguien al lado, yo doy un entrenamiento 1:1 de 6 clases: lo instalamos en su máquina, le metemos su contexto adentro, conectamos su correo y sus números, y dejamos una automatización corriendo sola. Usted escribe, yo lo guío.
 
-- El subagente que edita video solo
-- El coordinador orquestando 5 subagentes en paralelo
-- Subagentes de bono
-- Personalización para su trabajo específico
-- Acceso vitalicio a la comunidad donde esto sigue creciendo
-
-Fecha, precio y cupos actualizados en la página de la inmersión.
-
-**[Inscribirse en la inmersión](https://matheusvizotto.com/pt-br/imersao-segundo-cerebro)**
+**[Hablemos por WhatsApp](https://wa.me/61414059664)**
 
 ---
 
