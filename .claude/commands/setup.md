@@ -697,7 +697,7 @@ Crecimiento: `/secuencia-email`, `/ads-google`, `/investigacion`
 
 ## Cómo invocarme
 
-Me activo automáticamente cuando usted abre Claude Code en este vault — los hooks inyectan mi contexto en la primera llamada.
+Me activo automáticamente cuando usted abre Claude Code en este vault. El hook `SessionStart` inyecta mi contexto al abrir la sesión, antes de su primer mensaje.
 
 Para un trabajo específico: use los comandos `/` de arriba.
 Para una conversación directa: hábleme normal.

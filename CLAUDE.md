@@ -121,9 +121,23 @@ Configurados en `.claude/settings.json`, corren solos (requieren `python3` en el
 
 - `SessionStart` llama a `.claude/hooks/session-start.py`: inyecta identidad + último daily en el contexto al comienzo de la sesión. El stdout de `SessionStart` entra en el contexto del modelo. El evento `PreToolUse`, usado antes, NO inyecta stdout en el contexto, y era por eso que el agente parecía desconectado.
 - `SessionEnd` llama a `.claude/hooks/session-end.py`: documentación automática OPT-IN, apagada por defecto. Para prenderla, crea el archivo `AIOS/autodoc.enabled` (o exporta `AIOS_AUTODOC=1`). Queda apagada por defecto para no gastar tokens ni trabar la salida de la sesión.
-- `PreCompact` llama a `.claude/hooks/session-capture.py`: recuerda persistir la sesión antes de comprimirla.
+- `Stop` llama a `.claude/hooks/session-capture.py`: antes de que termine el turno, le pide a la IA persistir la sesión en el daily de hoy. Devuelve `{"decision": "block", "reason": ...}`, que es el único canal que le habla a la IA fuera de los tres eventos de arriba. Se queda callado si la nota de hoy se escribió en los últimos 20 minutos, así que solo interrumpe cuando la documentación de verdad quedó vieja.
+
+> [!warning] Solo tres eventos ponen el stdout del hook en el contexto
+> `UserPromptSubmit`, `UserPromptExpansion` y `SessionStart`. En cualquier otro evento el `print()` del hook va al transcript y la IA nunca lo lee. La excepción es `Stop`, que tiene canal propio: `{"decision": "block", "reason": "..."}` le entrega el `reason` a la IA. Un hook que necesita hablarle a la IA usa uno de esos cuatro caminos y ningún otro. Este kit ya cometió ese error dos veces, con `session-start.py` en `PreToolUse` y con `session-capture.py` en `PreCompact`.
 
 Sin Python, el vault y los comandos siguen funcionando. Solo quedan apagadas la inyección y el resumen automáticos, y la IA lee los archivos del Session Startup a mano.
+
+### Revisar que los hooks estén vivos
+
+```bash
+python3 .claude/hooks/test-hooks.py     # Mac y Linux
+python .claude/hooks/test-hooks.py      # Windows
+```
+
+Corre los hooks de verdad y mide lo que devuelven. Sale con código `0` si todo pasó y `1` si cualquier caso falló. **El código de salida es la prueba.** "Pasó" impreso en pantalla no vale nada si el exit es `1`, así que revisa el exit y no el mensaje.
+
+El caso más importante es `canal ok`: ejecuta cada hook configurado y reprueba a cualquiera que escriba en `stdout` en un evento que no le entrega el `stdout` a la IA. Es el caso que habría atrapado los dos bugs que este kit ya tuvo. Si tocas el `settings.json` y apuntas un hook al evento equivocado, se pone rojo de inmediato.
 
 ---
 

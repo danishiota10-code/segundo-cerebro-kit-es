@@ -21,10 +21,10 @@ Los archivos que están acá son markdown puro — viajan a Claude Code, Cursor,
 
 Cuando abres Claude Code (u otra herramienta de IA) dentro de este vault:
 
-1. **Arranca la sesión** — el hook `session-start.py` inyecta `knowledge/index.md`, este archivo (`AIOS/index.md`), `AIOS/operating-rules.md` y `02 Context/me.md` en el contexto inicial.
-2. **La IA ya te conoce** — sin que tengas que explicarle quién eres, cómo trabajas ni qué estás haciendo.
-3. **Corre el trabajo** — tú invocas comandos, haces preguntas, ella ejecuta.
-4. **La sesión termina o se comprime** — el hook `session-capture.py` le recuerda a la IA guardar el progreso en el daily antes de perder contexto.
+1. **Arranca la sesión.** El hook `session-start.py` inyecta en el contexto tu identidad (`02 Context/me.md`, u `operator.md` más `organization.md` en el modo empresa) y el último daily. Este archivo, `AIOS/operating-rules.md`, `AIOS/knowledge-routing.md` y `knowledge/index.md` entran como **punteros**, no como contenido: la IA los lee cuando la tarea lo pide. Es a propósito. Contexto que entra en toda sesión sin usarse cuesta tokens y estorba.
+2. **La IA ya te conoce.** Sin que tengas que explicarle quién eres, cómo trabajas ni qué estás haciendo.
+3. **Corre el trabajo.** Tú invocas comandos, haces preguntas, ella ejecuta.
+4. **Termina el turno.** El hook `session-capture.py` corre en el evento `Stop` y le pide a la IA guardar la sesión en el daily antes de terminar. Se queda callado si la nota de hoy ya se escribió en los últimos 20 minutos.
 
 Por eso `01 Daily/YYYY-MM-DD.md` siempre se lee en la sesión siguiente — se vuelve memoria persistente entre conversaciones.
 

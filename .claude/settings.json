@@ -20,7 +20,7 @@
         ]
       }
     ],
-    "PreCompact": [
+    "Stop": [
       {
         "hooks": [
           {

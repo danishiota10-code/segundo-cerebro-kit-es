@@ -161,6 +161,17 @@ Si lo instaló a mano con `git clone`, corra `/setup` dentro de Claude Code. Va 
 3. Hacerle 8 preguntas cortas
 4. Llenar su `me.md` con datos reales (no con placeholders)
 
+### Paso 4 — Revise que los hooks estén vivos
+
+```bash
+python3 .claude/hooks/test-hooks.py     # Mac y Linux
+python .claude/hooks/test-hooks.py      # Windows
+```
+
+Espere `RESULTADO: 17/17 casos pasaron` y código de salida `0`. La prueba corre los hooks de verdad en vez de leer el código y suponer que todo está bien.
+
+Un hook conectado al evento equivocado es el defecto más caro que existe, porque corre, sale con código `0` y no hace absolutamente nada. Tiene cara de salud. Esta prueba es lo que separa un hook vivo de uno que solo parece vivo.
+
 ---
 
 ## Comandos disponibles

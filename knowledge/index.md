@@ -19,11 +19,13 @@ Volver al hub central del vault: [[Home]].
 
 ## Cómo funciona
 
-Cuando abres Claude Code (u otra herramienta) dentro de este vault, el hook `session-start.py` inyecta este archivo en el contexto inicial. Todo lo que esté listado acá, o enlazado desde acá, queda disponible para la IA de inmediato.
+Cuando abres Claude Code (u otra herramienta) dentro de este vault, el hook `session-start.py` apunta la IA a este archivo apenas abre la sesión. No pega el contenido entero en el contexto, entrega la ruta. La IA lee este índice y abre el dominio que la tarea pida.
 
 **Diferencia con `04 Resources/`:**
-- `knowledge/` = siempre cargado (cabe poco, prioridad alta)
-- `04 Resources/` = consultado bajo demanda (cabe todo, prioridad baja)
+- `knowledge/` = primera parada, la IA sabe que existe desde el comienzo de la sesión (cabe poco, prioridad alta)
+- `04 Resources/` = consultado cuando alguien busca (cabe todo, prioridad baja)
+
+Por eso este archivo tiene que ser un índice corto y bien enlazado, y no un vertedero. Es el mapa, el contenido vive en los archivos de dominio.
 
 **Qué va en knowledge:**
 - Los conceptos centrales de tu trabajo (copywriting, growth, SEO, etc.)
